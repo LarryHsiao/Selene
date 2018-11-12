@@ -1,4 +1,5 @@
 import threading
+import time
 
 from flask import Flask, request
 from sense_hat import SenseHat
@@ -40,11 +41,18 @@ def shutdown_server():
     func()
 
 
+r = 0
+g = 0
+b = 0
+
+
 def loop():
+    global r, g, b
     while running:
-        r = 150
-        g = 255
-        b = 255
+        time.sleep(0.05)
+        r = (r + 1) % 122
+        g = (g + 2) % 122
+        b = (b + 3) % 122
         sense.clear((r, g, b))
 
     sense.clear((0, 0, 0))
